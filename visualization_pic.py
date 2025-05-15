@@ -26,7 +26,7 @@ def extract_lines_from_kml_simple(file_path):
 
 def main():
     kml_folder = r"./"   # 更换自己的KML文件路径
-    china_geojson = r"CHN.json"    # 更换自己的中国地图底图路径
+    china_geojson = r"background.json"    # 更换自己的中国地图底图路径
     output_image = "railway_trace_map.png"
 
     kml_files = [os.path.join(kml_folder, f) for f in os.listdir(kml_folder) if f.endswith('.kml')]
