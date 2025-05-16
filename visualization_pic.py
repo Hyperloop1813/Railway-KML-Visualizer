@@ -25,8 +25,8 @@ def extract_lines_from_kml_simple(file_path):
 
 
 def main():
-    kml_folder = r"./"   # 更换自己的KML文件路径
-    china_geojson = r"background.json"    # 更换自己的中国地图底图路径
+    kml_folder = r"./"   # 设置KML文件夹路径
+    china_geojson = r"background.json"    # 设置不同底图路径
     output_image = "railway_trace_map.png"
 
     kml_files = [os.path.join(kml_folder, f) for f in os.listdir(kml_folder) if f.endswith('.kml')]
@@ -45,7 +45,7 @@ def main():
     china = gpd.read_file(china_geojson)
     china = china.to_crs("EPSG:4326")
 
-    plt.rcParams['font.sans-serif'] = ['SimHei']  # 替换为你电脑支持的中文字体
+    plt.rcParams['font.sans-serif'] = ['SimHei']
     plt.rcParams['axes.unicode_minus'] = False
 
     fig, ax = plt.subplots(figsize=(20, 20))
