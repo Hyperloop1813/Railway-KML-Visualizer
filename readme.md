@@ -7,7 +7,7 @@
 
 ### 功能特性
 - 读取多个 KML 文件，提取其中 LineString 坐标，生成线路图；
-- 使用 Folium 创建交互式地图，及通过 Matplotlib 生成图片；
+- 使用 Folium 创建交互式地图，及通过 Matplotlib 生成静态图片；
 - 支持多种线路颜色调节；
 - 支持多种底图切换；
 - 提供线路信息提示。
@@ -65,13 +65,14 @@
 > 注意：安装 `geopandas` 时会自动安装大部分空间数据处理依赖（如 `shapely`, `fiona`, `pyproj` 等），建议一次性通过完整方式安装。
 
 #### 安装依赖
-进入终端，执行以下命令
-如果只生成 html 交互地图：
+进入终端，执行以下命令：
+
+如果只生成 html 交互地图
 ```bash
 pip install folium
 pip install lxml
 ```
-如果需要生成静态图片，还需安装
+如果需要生成静态图片，还需额外安装
 ```bash
 pip install geopandas
 pip install matplotlib
