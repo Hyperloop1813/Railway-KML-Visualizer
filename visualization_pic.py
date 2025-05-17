@@ -24,13 +24,8 @@ def extract_lines_from_kml_simple(file_path):
     return lines
 
 
-def main():
-    kml_folder = r"./"   # 设置KML文件夹路径
-    china_geojson = r"background.json"    # 设置不同底图路径
-    output_image = "railway_trace_map.png"
-
+def load_kml_lines(kml_folder):
     kml_files = [os.path.join(kml_folder, f) for f in os.listdir(kml_folder) if f.endswith('.kml')]
-
     all_lines = []
     for kml_file in kml_files:
         lines = extract_lines_from_kml_simple(kml_file)
@@ -38,25 +33,50 @@ def main():
 
     if not all_lines:
         print("没有解析到任何线路，程序终止。")
-        return
+        return None
 
-    gdf_lines = gpd.GeoDataFrame(geometry=all_lines, crs="EPSG:4326")
+    return gpd.GeoDataFrame(geometry=all_lines, crs="EPSG:4326")
 
-    china = gpd.read_file(china_geojson)
-    china = china.to_crs("EPSG:4326")
 
+def load_backgrounds(background_files):
+    backgrounds = []
+    for bg_file in background_files:
+        bg = gpd.read_file(bg_file)
+        bg = bg.to_crs("EPSG:4326")
+        backgrounds.append(bg)
+    return backgrounds
+
+
+def plot_map(backgrounds, gdf_lines, output_image):
     plt.rcParams['font.sans-serif'] = ['SimHei']
     plt.rcParams['axes.unicode_minus'] = False
 
     fig, ax = plt.subplots(figsize=(20, 20))
-    china.plot(ax=ax, color='#222222', edgecolor='white')
+
+    for bg in backgrounds:
+        bg.plot(ax=ax, color='#222222', edgecolor='white')
+
     gdf_lines.plot(ax=ax, color='orange', linewidth=4)
-    ax.set_title('铁路足迹', fontsize=20,color='white')
+
+    ax.set_title('铁路足迹', fontsize=20, color='white')
     ax.axis('off')
 
     plt.savefig(output_image, dpi=300, bbox_inches='tight')
     print(f"地图已保存为 {output_image}")
     #plt.show()
+
+
+def main():
+    kml_folder = r"./"   # 设置KML文件路径
+    background_files = [r"background.json", r"background1.json"]   # 设置底图文件路径
+    output_image = "railway_trace_map.png"
+
+    gdf_lines = load_kml_lines(kml_folder)
+    if gdf_lines is None:
+        return
+
+    backgrounds = load_backgrounds(background_files)
+    plot_map(backgrounds, gdf_lines, output_image)
 
 
 if __name__ == "__main__":
