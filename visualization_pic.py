@@ -58,17 +58,27 @@ def plot_map(backgrounds, gdf_lines, output_image):
 
     gdf_lines.plot(ax=ax, color='orange', linewidth=4)
 
+    xmin, xmax = ax.get_xlim()
+    ymin, ymax = ax.get_ylim()
+
+    # new_ymin = ymin
+    new_ymin = ymin + (ymax - ymin) * 0.25
+
+    ax.set_ylim(new_ymin, ymax)
+    ax.set_xlim(xmin, xmax)
+
     ax.set_title('铁路足迹', fontsize=20, color='white')
     ax.axis('off')
 
     plt.savefig(output_image, dpi=300, bbox_inches='tight')
     print(f"地图已保存为 {output_image}")
-    #plt.show()
 
 
 def main():
     kml_folder = r"./"   # 设置KML文件路径
-    background_files = [r"background.json", r"background1.json"]   # 设置底图文件路径
+    background_files = [r"CHN.json"]   # 设置底图文件路径
+    # background_files = [r"background.json",r"background1.json"]
+    # 如果程序读取CHN.json失败：请注释第79行，解注释第80行；同时注释第65行，解注释64行
     output_image = "railway_trace_map.png"
 
     gdf_lines = load_kml_lines(kml_folder)

@@ -37,7 +37,7 @@
 - 选择始发终到站（如北京南-济南西）
 - 点击导出KML
 
-若要通 GeoPandas + Matplotlib 导出静态线路图，那么还需要提前准备一张底图 json 文件作为图片展示的背景，我这里选择了[GADM](https://gadm.org/download_country.html "GADM")上的地图。
+若要通 GeoPandas + Matplotlib 导出静态线路图，那么还需要提前准备一张底图 GeoJson 文件作为图片展示的背景，我这里选择了[阿里云](https://datav.aliyun.com/portal/school/atlas/area_selector "阿里云")上的地图。
 
 ---
 
